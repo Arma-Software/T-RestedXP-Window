@@ -1,7 +1,9 @@
 ## Interface: 11200
-## Title: [ |cFFFFFFFFWM|r ] |cFF11A6ECT-RestedXP|r |cFF7FFF7Fv1.18|r
-## Author: Mikhail Palagin (Wht Mst)
-## Version: 1.18
-## Notes: |cFF11A6ECT-RestedXP|r is an addon for tracking 0% and 100% rested XP for |cff00ff00Turtle WoW|r. Made with love by Wht Mst.
+## Title: RestedXP Window for TurtleWoW
+## Author: Glofuss
+## Version: 1.0
+## Notes: |cFF11A6ECT-RestedXP-Window|r is an addon for tracking 0% and 100% rested XP for |cff00ff00Turtle WoW|r. Made with love by Wht Mst & Glofuss.
 
-T-RestedXP.lua
+T-RestedXP-Window.lua
+
+## SavedVariables: T_RestedXP_DB
