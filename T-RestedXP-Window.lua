@@ -353,7 +353,7 @@ function UpdateRestedXPWindow()
             restedXPBar:SetStatusBarColor(r, g, b)
         end
 
-        if percent >= 99 then
+        if percent >= 99.9 then
             -- Full rested visuals
             SetFullRestedVisual(true)
             SetZeroRestedVisual(false)
