@@ -14,7 +14,7 @@ RU: **T-RestedXP-Window** — это простой аддон для отсле
 
 ---
 
-# T-RestedXP: Download / Скачать
+# T-RestedXP-Window: Download / Скачать
 
 **If you use Turtle WoW Launcher:**
 Just go to the Addons section, click "Add new addon", paste the link `https://github.com/Arma-Software/T-RestedXP-Window.git` and click Install. That's all, nothing else is required.
