@@ -1,8 +1,10 @@
 ## Interface: 11200
 ## Title: RestedXP Window for TurtleWoW
+## Title-ruRU: Окно RestedXP для TurtleWoW
 ## Author: Glofuss
 ## Version: 1.0
 ## Notes: |cFF11A6ECT-RestedXP-Window|r is an addon for tracking 0% and 100% rested XP for |cff00ff00Turtle WoW|r. Made with love by Wht Mst & Glofuss.
+## Notes-ruRU: |cFF11A6ECT-RestedXP-Window|r - это аддон для отслеживания 0% и 100% отдыхающего опыта (rested XP) в Turtle WoW. Создан с любовью Wht Mst и Glofuss.
 
 T-RestedXP-Window.lua
 
