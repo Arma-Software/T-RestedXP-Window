@@ -410,7 +410,7 @@ function UpdateRestedXPWindow()
 
         -- NEW: color the text based on "enough for level up"
         if IsRestedEnoughForLevelUp() then
-            restedXPText:SetTextColor(0.4, 0.9, 0.4)   -- green
+            restedXPText:SetTextColor(1.0, 0.82, 0.0)   -- yellow
         else
             restedXPText:SetTextColor(1.0, 0.55, 0.0)  -- orange
         end
