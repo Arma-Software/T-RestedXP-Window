@@ -167,7 +167,7 @@ restedXPWindow:SetScript("OnEnter", function()
         restedLevels = exhaustion / maxXP
     end
 
-    GameTooltip:AddLine("T-RestedXP", 1, 0.82, 0)
+    GameTooltip:AddLine("Rested XP Window", 1, 0.82, 0)
     GameTooltip:AddLine(" ")
 
     GameTooltip:AddLine("Rested XP: "..exhaustion, 0.8, 0.8, 0.8)
