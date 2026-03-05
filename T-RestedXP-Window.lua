@@ -152,6 +152,44 @@ function CreateRestedXPWindow()
     restedXPWindow:SetMovable(true)
     restedXPWindow:RegisterForDrag("LeftButton")
 
+    -- Tooltip
+restedXPWindow:SetScript("OnEnter", function()
+    GameTooltip:SetOwner(restedXPWindow, "ANCHOR_RIGHT")
+
+    local exhaustion = GetXPExhaustion() or 0
+    local maxXP = UnitXPMax("player")
+    local curXP = UnitXP("player")
+
+    local xpNeeded = maxXP - curXP
+    local restedLevels = 0
+
+    if maxXP and maxXP > 0 then
+        restedLevels = exhaustion / maxXP
+    end
+
+    GameTooltip:AddLine("T-RestedXP", 1, 0.82, 0)
+    GameTooltip:AddLine(" ")
+
+    GameTooltip:AddLine("Rested XP: "..exhaustion, 0.8, 0.8, 0.8)
+    GameTooltip:AddLine(string.format("Rested Levels: %.2f", restedLevels), 0.6, 0.9, 0.6)
+
+    if xpNeeded then
+        GameTooltip:AddLine("XP to Level: "..xpNeeded, 0.8, 0.8, 0.8)
+    end
+
+    if exhaustion >= xpNeeded then
+        GameTooltip:AddLine("Enough rested for full level!", 0.4, 0.9, 0.4)
+    else
+        GameTooltip:AddLine("Not enough rested for level", 1.0, 0.6, 0.2)
+    end
+
+    GameTooltip:Show()
+end)
+
+restedXPWindow:SetScript("OnLeave", function()
+    GameTooltip:Hide()
+end)
+
     restedXPWindow:SetScript("OnDragStart", function()
         restedXPWindow:StartMoving()
     end)
@@ -328,6 +366,26 @@ local function SetZeroRestedVisual(isZero)
     end
 end
 
+-- Returns true if remaining rested XP is enough to cover all XP needed to level up
+-- Возвращает true, если остатка rested XP хватает на весь оставшийся XP до левела
+local function IsRestedEnoughForLevelUp()
+    if IsPlayerMaxLevel() then return false end
+
+    local maxXP = UnitXPMax("player")
+    local curXP = UnitXP("player")
+    if not maxXP or maxXP <= 0 or not curXP then
+        return false
+    end
+
+    local xpNeeded = maxXP - curXP
+    if xpNeeded <= 0 then
+        return true
+    end
+
+    local exhaustion = GetXPExhaustion() or 0 -- rested bonus XP remaining
+    return exhaustion >= xpNeeded
+end
+
 function UpdateRestedXPWindow()
     if not restedXPWindow then
         CreateRestedXPWindow()
@@ -337,16 +395,26 @@ function UpdateRestedXPWindow()
 
     if percent == nil then
         restedXPText:SetText("Rested: n/a")
+        restedXPText:SetTextColor(1, 1, 1) -- default
+
         SetFullRestedVisual(false)
         SetZeroRestedVisual(false)
+
         if restedXPBar then
             restedXPBar:SetValue(0)
             local r, g, b = GetRestedBarColor(nil)
             restedXPBar:SetStatusBarColor(r, g, b)
         end
-        SetFullRestedVisual(false)
     else
         restedXPText:SetText(string.format("Rested: %.1f%%", percent))
+
+        -- NEW: color the text based on "enough for level up"
+        if IsRestedEnoughForLevelUp() then
+            restedXPText:SetTextColor(0.4, 0.9, 0.4)   -- green
+        else
+            restedXPText:SetTextColor(1.0, 0.55, 0.0)  -- orange
+        end
+
         if restedXPBar then
             restedXPBar:SetValue(percent)
             local r, g, b = GetRestedBarColor(percent)
@@ -354,15 +422,12 @@ function UpdateRestedXPWindow()
         end
 
         if percent >= 99.9 then
-            -- Full rested visuals
             SetFullRestedVisual(true)
             SetZeroRestedVisual(false)
         elseif percent <= 0.1 then
-            -- 0% visuals
             SetFullRestedVisual(false)
             SetZeroRestedVisual(true)
         else
-            -- Middle range, no special pulse/shake
             SetFullRestedVisual(false)
             SetZeroRestedVisual(false)
         end
